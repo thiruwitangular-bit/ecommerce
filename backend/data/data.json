@@ -1,0 +1,52 @@
+[
+  {
+    "id": "P001",
+    "name": "Digital Blood Pressure Monitor",
+    "description": "Automatic upper arm blood pressure monitor with accurate readings.",
+    "price": 1499,
+    "imageUrl": "https://example.com/images/bp-monitor.jpg",
+    "rating": 4.5,
+    "reviewCount": 120,
+    "inStock": true
+  },
+  {
+    "id": "P002",
+    "name": "Infrared Thermometer",
+    "description": "Non-contact infrared thermometer for quick temperature measurement.",
+    "price": 899,
+    "imageUrl": "https://example.com/images/thermometer.jpg",
+    "rating": 4.3,
+    "reviewCount": 85,
+    "inStock": true
+  },
+  {
+    "id": "P003",
+    "name": "Pulse Oximeter",
+    "description": "Finger pulse oximeter to measure SpO2 and pulse rate.",
+    "price": 599,
+    "imageUrl": "https://example.com/images/oximeter.jpg",
+    "rating": 4.4,
+    "reviewCount": 200,
+    "inStock": false
+  },
+  {
+    "id": "P004",
+    "name": "Wheelchair",
+    "description": "Foldable wheelchair with comfortable seating and durable frame.",
+    "price": 5999,
+    "imageUrl": "https://example.com/images/wheelchair.jpg",
+    "rating": 4.6,
+    "reviewCount": 60,
+    "inStock": true
+  },
+  {
+    "id": "P005",
+    "name": "Nebulizer Machine",
+    "description": "Portable nebulizer for respiratory therapy at home.",
+    "price": 1999,
+    "imageUrl": "https://example.com/images/nebulizer.jpg",
+    "rating": 4.2,
+    "reviewCount": 95,
+    "inStock": true
+  }
+]
