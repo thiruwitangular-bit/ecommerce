@@ -9,7 +9,7 @@ import { ProductApi } from '../../services/product-api';
   template: `
    <div class="p-4">
       <div class="max-w-screen-xl mx-auto">
-        <div class="rounded-2xl bg-gradient-to-r from-purple-100 via-pink-100 to-purple-50 px-6 py-8 sm:py-14">
+        <div class="rounded-2xl banner-container px-6 py-8 sm:py-14">
           <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 mb-4">Discover Amazing Products</h2>
             <p class="text-lg text-slate-600">Transform your experience with our innovative solutions</p>
@@ -42,7 +42,17 @@ import { ProductApi } from '../../services/product-api';
       </div>
     </div>
   `,
-  styles: ``,
+  styles: `
+  .banner-container {
+  width: 100%;          /* full width of container */
+  height: 300px;        /* set desired height */
+  background-image: url('/webBanner2.png');
+  background-size: cover;      /* cover container, maintain aspect ratio */
+  background-position: center; /* center the image */
+  background-repeat: no-repeat; /* prevent tiling */
+  overflow: hidden;            /* optional: hide any overflow */
+}
+  `,
 })
 export class Banner {
 private productapi = inject(ProductApi)
