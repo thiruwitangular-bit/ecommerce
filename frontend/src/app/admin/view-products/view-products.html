@@ -1,0 +1,89 @@
+<div class="max-w-4xl mx-auto px-6 my-10">
+
+    @if (selectedProduct) {
+    <div class="mt-8 p-4 border rounded bg-gray-100">
+
+        <h2 class="text-lg font-bold mb-3">Update Product</h2>
+        <label for="name">Product Name:
+            <input [(ngModel)]="selectedProduct.name" id="name" class="border p-2 mb-2 w-full" />
+        </label>
+        <label for="name">Product Description:
+            <input [(ngModel)]="selectedProduct.description" class="border p-2 mb-2 w-full" />
+        </label>
+        <label for="name">Product Price:
+            <input [(ngModel)]="selectedProduct.price" type="number" class="border p-2 mb-2 w-full" />
+        </label>
+        <label for="name">Product Image:
+            <input [(ngModel)]="selectedProduct.imageUrl" class="border p-2 mb-2 w-full" />
+        </label>
+        <label for="name">Product Stock:
+            <input [(ngModel)]="selectedProduct.stock" type="number" class="border p-2 mb-2 w-full" />
+        </label>
+        <div class="flex gap-2">
+            <button (click)="updateProduct()" class="bg-green-500 text-white px-4 py-2 rounded">
+                Save
+            </button>
+
+            <button (click)="selectedProduct = null" class="bg-gray-400 text-white px-4 py-2 rounded">
+                Cancel
+            </button>
+        </div>
+
+    </div>
+    }
+
+    <!-- title and add button -->
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center gap-6 flex-wrap border-b border-gray-300 pb-4">
+            <div class="flex-1 text-nowrap">
+                <h2 class="text-2xl font-semibold text-slate-900">View Products</h2>
+            </div>
+        </div>
+    </div>
+    @if (productsResource.value()) {
+    <!-- product view - start -->
+    <div class="bg-white p-4 mx-auto lg:max-w-7xl md:max-w-4xl">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-sm:justify-center gap-y-12 gap-4 sm:gap-x-6">
+            @for (product of productsResource.value(); track product._id) {
+            <a href="javascript:void(0)" class="block">
+                <div class="flex max-sm:flex-col items-center gap-6 overflow-hidden h-40 cursor-pointer">
+                    <div class="w-24 h-24 shrink-0 bg-slate-100 p-3 overflow-hidden rounded-lg">
+                        <img [src]="'http://localhost:3000' + product.imageUrl" alt="product1"
+                            class="h-full w-full object-contain" />
+                    </div>
+
+                    <div class="max-sm:text-center">
+                        <h4 class="text-sm sm:text-sm font-semibold text-slate-600 text-truncate w-100"
+                            title="{{product.name}}">{{product.name}}</h4>
+                        @if (product.category) {
+                        <h4 class="text-sm sm:text-sm font-normal text-slate-600 text-truncate w-100"
+                            title="{{product.category}}">Cat: {{product.category}}</h4>
+                        }
+                        <h4 class="text-sm sm:text-sm text-blue-600 font-bold mt-2">{{product.price | currency:"INR"}}
+                        </h4>
+                        <h4 class="text-sm sm:text-sm text-gray-500 font-normal mt-2">Stock - {{product.stock}}</h4>
+                    </div>
+                </div>
+                <div class="flex gap-2 justify-center items-center">
+                    <button (click)="deleteProduct(product._id!)"
+                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+                        <span class="material-icons text-sm">delete</span>
+                    </button>
+                    <button (click)="editProduct(product)"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+                        <span class="material-icons text-sm">update</span>
+                    </button>
+                </div>
+            </a>
+            }
+        </div>
+    </div>
+    <!--product view - end-->
+    }
+    @if (productsResource.value()) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-8">
+        @for (product of productsResource.value(); track product._id) {
+        }
+    </div>
+    }
+</div>

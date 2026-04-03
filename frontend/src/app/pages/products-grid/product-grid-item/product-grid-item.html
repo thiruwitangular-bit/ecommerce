@@ -1,0 +1,49 @@
+@if (productsResource.isLoading()) {
+<p>loading...</p>
+}
+@else if (productsResource.value()?.length===0) {
+<div>
+    No products found 😢
+</div>
+}
+@else {
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-8">
+    @for (product of productsResource.value(); track product._id) {
+    <div
+        class="flex flex-col border border-gray-300 shadow-sm rounded-md p-1.5 transition-all relative overflow-hidden">
+        <a href="javascript:void(0)" class="block" [routerLink]="['/product',product._id]">
+            <div class="w-full bg-slate-50">
+                <img [src]="'http://localhost:3000' + product.imageUrl" alt="Product-1"
+                    class="w-full aspect-square object-cover object-top" />
+            </div>
+            <div class="py-4 px-2 text-left">
+                <h6 class="text-sm sm:text-[15px] font-semibold text-slate-900 line-clamp-2">{{product.name}}</h6>
+                <p class="text-sm text-gray-600 line-clamp-2">
+                    {{product.description}}</p>
+                <div class="mt-4">
+                    <p class="text-slate-900 font-semibold text-sm sm:text-[15px] break-words">
+                        <span class="mr-1.5"></span>{{product.price | currency:"INR"}}
+                    </p>
+                </div>
+            </div>
+        </a>
+        <div class="h-[78px]">
+            <div class="flex flex-col items-center w-full absolute left-0 right-0 px-2 bottom-3">
+                <button type="button" [disabled]="product.stock === 0" (click)="addTocart(product)"
+                    class="flex items-center justify-center gap-2 px-2 py-2 cursor-pointer rounded-md text-white text-sm sm:text-[15px] font-medium whitespace-nowrap border-0 outline-0 w-full"
+                    [ngClass]="product.stock === 0 ? 'bg-gray-400 !cursor-not-allowed':'bg-purple-700 hover:bg-purple-800'">
+                    {{ product.stock === 0 ? 'Out of Stock' : 'Add to Bag' }}</button>
+                <button type="button" (click)="toggleWishlist(product)"
+                    class="pb-0.5 pt-3 cursor-pointer text-sm sm:text-[15px] text-slate-900 font-medium whitespace-nowrap outline-0 flex items-center gap-2">
+                    <i class="fa" [ngClass]="isInwishlist(product)
+    ? 'fa-heart text-red-500'
+    : 'fa-heart-o text-gray-400'">
+                    </i>
+                    <span>Add to wishlist</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}

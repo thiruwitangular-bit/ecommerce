@@ -1,0 +1,29 @@
+@if (wishlistservice.items().length === 0) {
+<div class="text-center my-10">
+    <p>Your wishlist is empty 💔</p>
+</div>
+}
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-8">
+@for (product of wishlistservice.items(); track $index) {
+<div class="flex flex-col border border-gray-300 shadow-sm rounded-md p-1.5 transition-all relative overflow-hidden">
+  
+        <div class="w-full bg-slate-50">
+            <img [src]="'http://localhost:3000' + product.imageUrl" alt="Product-1"
+                class="w-full h-40 aspect-square object-cover object-top" />
+        </div>
+        <div class="py-4 px-2 text-left">
+            <h6 class="text-sm sm:text-[15px] font-semibold text-slate-900 line-clamp-2">{{product.name}}</h6>
+            <p class="text-sm text-gray-600 line-clamp-2">
+                {{product.description}}</p>
+            <div class="mt-4">
+                <p class="text-slate-900 font-semibold text-sm sm:text-[15px] break-words">
+                    <span class="mr-1.5"></span>{{product.price | currency:"INR"}}
+                </p>
+            </div>
+            <button type="button" (click)="remove(product._id)"
+                class="flex items-center justify-center gap-2 px-2 py-2 cursor-pointer rounded-md text-white text-sm sm:text-[15px] font-medium whitespace-nowrap border-0 outline-0 w-full bg-gray-400 hover:bg-gray-500">
+                Remove</button>
+        </div>
+</div>
+}
+</div>
