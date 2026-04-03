@@ -33,7 +33,7 @@ onSearch(value:string) {
   }
 
   showAllProducts() {
-     this.searchservice.clear();
+   this.searchservice.clear();
     this.productapi.category.set('');
   }
 }

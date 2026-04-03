@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { SearchService } from '../../services/search-service';
+import { ProductApi } from '../../services/product-api';
 
 @Component({
   selector: 'app-banner',
@@ -11,7 +13,7 @@ import { RouterLink } from "@angular/router";
           <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 mb-4">Discover Amazing Products</h2>
             <p class="text-lg text-slate-600">Transform your experience with our innovative solutions</p>
-            <button routerLink="/products" class="bg-purple-700 hover:bg-purple-800 text-white px-6 py-3 rounded-full text-base font-medium hover:bg-purple-700 cursor-pointer transition mt-8">
+            <button routerLink="/products" (click)="showAllproducts()" class="bg-purple-700 hover:bg-purple-800 text-white px-6 py-3 rounded-full text-base font-medium hover:bg-purple-700 cursor-pointer transition mt-8">
               Shop Now
             </button>
           </div>
@@ -43,5 +45,10 @@ import { RouterLink } from "@angular/router";
   styles: ``,
 })
 export class Banner {
-
+private productapi = inject(ProductApi)
+  private searchservice = inject(SearchService)
+  showAllproducts() {
+    this.searchservice.clear();
+    this.productapi.category.set('')
+  }
 }
