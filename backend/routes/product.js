@@ -10,17 +10,21 @@ const upload = multer({ dest: 'uploads/' })
 router.get('/search', async (req, res) => {
     try {
         const q = req.query.q?.trim();
-
-        if (!q) {
-            return res.json([]);
-        }
-        const products = await Product.find({
-            $or: [
+        const category = req.query.category?.trim();
+        let filter = {};
+    
+        if(q) {
+            filter.$or = [
                 { name: { $regex: q, $options: 'i' } },
                 { description: { $regex: q, $options: 'i' } },
                 { category: { $regex: q, $options: 'i' } }
             ]
-        });
+        }
+    
+        if (category) {
+            filter.category = new RegExp(`^${category}$`, 'i');
+        }
+        const products = await Product.find(filter);
         
         res.status(200).json(products)
     } catch (err) {
@@ -28,41 +32,48 @@ router.get('/search', async (req, res) => {
     }
 })
 
-//GET: list
+router.get('/', async (req, res) => {
+  try {
+    const category = req.query.category;
+
+    let filter = {};
+
+    if (category) {
+      filter.category = new RegExp(`^${category}$`, 'i');
+    }
+
+    const products = await Product.find(filter);
+
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ message: 'Error', err });
+  }
+});
+
 // router.get('/', async (req, res) => {
 //     try {
-//         const products = await Product.find();
+//         const query = req.query.q;
 
-//         res.status(200).json(products)
+//         let filter = {};
+
+//         if (query) {
+//             filter = {
+//                 $or: [
+//                     { name: { $regex: query, $options: 'i' } },
+//                     { description: { $regex: query, $options: 'i' } },
+//                     { category: { $regex: query, $options: 'i' } }
+//                 ]
+//             };
+//         }
+
+//         const products = await Product.find(filter);
+
+//         res.status(200).json(products);
+
 //     } catch (err) {
-//         res.status(500).json({ message: 'An error occured', err })
+//         res.status(500).json({ message: 'Error', err });
 //     }
-// })
-
-router.get('/', async (req, res) => {
-    try {
-        const query = req.query.q;
-
-        let filter = {};
-
-        if (query) {
-            filter = {
-                $or: [
-                    { name: { $regex: query, $options: 'i' } },
-                    { description: { $regex: query, $options: 'i' } },
-                    { category: { $regex: query, $options: 'i' } }
-                ]
-            };
-        }
-
-        const products = await Product.find(filter);
-
-        res.status(200).json(products);
-
-    } catch (err) {
-        res.status(500).json({ message: 'Error', err });
-    }
-});
+// });
 
 //GET: list-item //get by id
 router.get('/:id', async (req, res) => {
@@ -101,59 +112,6 @@ router.post('/', upload.single('image'), async (req, res) => {
         res.status(500).json({ message: 'An error occured', err })
     }
 })
-
-//order api
-// router.post('/order', async (req,res)=>{
-//     try {
-//         const {items, customer, pricing} = req.body;
-
-//     // updte stock
-//         for (const item of items) {
-//             const quantity = Number(item.quantity);
-//             if (!quantity || isNaN(quantity)) {
-//                 return res.status(400).json({
-//                     message:'Invalid Quantity'
-//                 })
-//             }
-//             const product = await Product.findById(item.productId);
-
-//             if(!product)  {
-//                 return res.status(404).json({message:'Product Not Found'});
-//             }
-
-//             // check stock
-//             if (product.stock < quantity) {
-//                 return res.status(400).json({
-//                     message: `${product.name} out of stock`
-//                 });
-//             }
-
-//             //update stock saftly
-//             await Product.findByIdAndUpdate(
-//                 item.productId,
-//             {
-//                 $inc: {stock: -quantity}
-//             });
-
-//             //reduce stock
-//             // product.stock -= item.quantity;
-//             // await product.save();
-//         }
-
-//         const newOrder = new Order({
-//             customer,
-//             items,
-//             pricing
-//         });
-
-//         await newOrder.save();
-        
-//         res.status(200).json({message:'order placed succesfully'})
-//     } catch (err) {
-//         console.log('order error', err);
-//         res.status(500).json({message:'order failed', err})
-//     }
-// })
 
 //PUT: update
 router.put('/:id', multer().none(), async (req, res) => {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { ProductApi } from '../../../services/product-api';
 import { CurrencyPipe, NgClass } from '@angular/common';
@@ -23,44 +23,15 @@ private snackbar = inject(MatSnackBar);
 // private searchSubject = new Subject<string>();\
 private searchservice = inject(SearchService);
 
-// private destroy$ = new Subject<void>();
-
-
-
-// ✅ search result
-  // products = signal<any[]>([]);
-  // isSearching = signal(false);
-
 wishlist:any[] = [];
 
-// ngOnInit(): void {
-//     this.searchservice.search$.pipe(
-//       debounceTime(300),
-//       distinctUntilChanged(),
-//       switchMap(term=> {
-//         if(!term) {
-//           this.isSearching.set(false);
-//           return of([]);
-//         }
-//         this.isSearching.set(true);
-//         return this.productapi.searchProducts(term).pipe(
-//           catchError((err:any)=>{
-//             console.log(err);
-//             return of([])
-//           })
-//         )
-//       }),
-//       takeUntil(this.destroy$)
-//     ).subscribe(res=>{
-//        console.log('API RESULT:', res);
-//       this.products.set(res)
-//     });
-// }
+constructor() {
+  effect(() => {
+  console.log('CATEGORY:', this.productapi.category());
+  console.log('TERM:', this.searchservice.term());
+});
+}
 
-// ngOnDestroy() {
-//   this.destroy$.next();
-//   this.destroy$.complete();
-// }
   onImageError(event:any) {
     event.target.src = '../../../assets/no-image.png'
   }

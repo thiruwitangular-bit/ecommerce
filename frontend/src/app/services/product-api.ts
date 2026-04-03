@@ -12,18 +12,32 @@ export class ProductApi {
 
   products = signal<Product[]>([]);
   private http = inject(HttpClient);
-  private searchservice = inject(SearchService)
+  private searchservice = inject(SearchService);
+
+  category = signal<string>('');
 
   // Fetch Products
   productResource = resource({
-    params: ()=> this.searchservice.term(),
-
+    params: ()=> ({
+      term: this.searchservice.term(),
+      category:this.category()
+    }),
     loader:async ({params})=>{
-      const term = params;
+      const {term, category} = params;
 
-      const url = term
-      ? `${environment.apiURL}/products/search?q=${term}`
-      : `${environment.apiURL}/products`;
+let url = `${environment.apiURL}/products`;
+
+if (term) {
+  url = `${environment.apiURL}/products/search?q=${term}`;
+}
+
+if (category) {
+  url += term ? `&category=${category}`:`?category=${category}`;
+}
+
+      // const url = term
+      // ? `${environment.apiURL}/products/search?q=${term}`
+      // : `${environment.apiURL}/products`;
 
       return await firstValueFrom(this.http.get<Product[]>(url));
     }

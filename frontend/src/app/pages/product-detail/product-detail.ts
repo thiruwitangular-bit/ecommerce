@@ -22,7 +22,7 @@ export class ProductDetail {
   product = signal<Product | null>(null);
   private snackbar = inject(MatSnackBar);
 
-count = signal(1);
+count = signal(0);
 
   constructor() {
     effect(() => {
