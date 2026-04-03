@@ -26,6 +26,10 @@ export class ViewProducts {
     this.selectedProduct = { ...product }; // clone
   }
 
+  ngOnInit() {
+    //  this.searchservice.clear();
+    this.productapi.category.set('');
+  }
 
   async updateProduct() {
     if (!this.selectedProduct?._id) return;

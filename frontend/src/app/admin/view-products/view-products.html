@@ -1,7 +1,7 @@
-<div class="max-w-4xl mx-auto px-6 my-10">
+<div class="w-full mx-auto px-6 my-10">
 
     @if (selectedProduct) {
-    <div class="mt-8 p-4 border rounded bg-gray-100">
+    <div class="mt-8 p-4 border rounded bg-gray-100 items-top">
 
         <h2 class="text-lg font-bold mb-3">Update Product</h2>
         <label for="name">Product Name:
@@ -37,7 +37,7 @@
 
     <!-- title and add button -->
     <div class="max-w-6xl mx-auto">
-        <div class="flex items-center gap-6 flex-wrap border-b border-gray-300 pb-4">
+        <div class="flex items-top gap-6 flex-wrap border-b border-gray-300 pb-4">
             <div class="flex-1 text-nowrap">
                 <h2 class="text-2xl font-semibold text-slate-900">View Products</h2>
             </div>
@@ -45,11 +45,11 @@
     </div>
     @if (productsResource.value()) {
     <!-- product view - start -->
-    <div class="bg-white p-4 mx-auto lg:max-w-7xl md:max-w-4xl">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-sm:justify-center gap-y-12 gap-4 sm:gap-x-6">
+    <div class="bg-white p-4 lg:max-w-6xl md:max-w-4xl">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-sm:justify-center gap-y-12 gap-4 sm:gap-x-6 items-top">
             @for (product of productsResource.value(); track product._id) {
             <a href="javascript:void(0)" class="block">
-                <div class="flex max-sm:flex-col items-center gap-6 overflow-hidden h-40 cursor-pointer">
+                <div class="flex max-sm:flex-col items-top gap-6 overflow-hidden h-40 cursor-pointer">
                     <div class="w-24 h-24 shrink-0 bg-slate-100 p-3 overflow-hidden rounded-lg">
                         <img [src]="'http://localhost:3000' + product.imageUrl" alt="product1"
                             class="h-full w-full object-contain" />
