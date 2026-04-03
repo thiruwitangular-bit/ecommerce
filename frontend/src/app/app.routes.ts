@@ -38,6 +38,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./admin/admin/admin').then(m => m.Admin)
             },
             {
+            path:'login',
+            loadComponent:()=>import('./pages/login/login').then(m=>m.Login)
+            },
+            {
                 path: 'page404',
                 loadComponent: () => import('./pages/page-404/page-404').then(m => m.Page404),
             },
@@ -47,4 +51,5 @@ export const routes: Routes = [
             }
         ]
     }
+    
 ];

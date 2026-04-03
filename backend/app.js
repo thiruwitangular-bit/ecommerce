@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors')
 const app = express();
@@ -18,13 +19,17 @@ app.use('/api/products', productRoutes);
 
 // route the order API
 const orderRoutes = require('./routes/order');
-app.use('/api/orders', orderRoutes)
+app.use('/api/orders', orderRoutes);
+
+// route Auth 
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
 
 app.get('/',(req,res)=>{
     res.send("Welcome to Ecommerce API!.")
 })
 
-app.listen(port,(error)=>{
+app.listen(process.env.port || port,(error)=>{
     if(!error) {
         console.log('Server is running successfully!! at',port)
     } else {
