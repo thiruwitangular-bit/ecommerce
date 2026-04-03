@@ -16,6 +16,10 @@ app.use(express.json());
 const productRoutes = require('./routes/product');
 app.use('/api/products', productRoutes);
 
+// route the order API
+const orderRoutes = require('./routes/order');
+app.use('/api/orders', orderRoutes)
+
 app.get('/',(req,res)=>{
     res.send("Welcome to Ecommerce API!.")
 })
