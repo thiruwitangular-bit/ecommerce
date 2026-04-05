@@ -4,6 +4,7 @@ import { CartService } from '../../services/cart';
 import { WishlistService } from '../../services/wishlist';
 import { SearchService } from '../../services/search-service';
 import { ProductApi } from '../../services/product-api';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +19,14 @@ export class Header {
  protected wishlistservice = inject(WishlistService);
  protected searchservice = inject(SearchService);
  protected productapi = inject(ProductApi);
+ protected auth = inject(AuthService);
 
  isAdmin = signal(false);
 
  ngOnInit() {
-  this.isAdmin.set(localStorage.getItem('role')==='admin')
+  this.isAdmin.set(localStorage.getItem('role')==='admin');
+  console.log(this.isAdmin())
+  this.cd.detectChanges();
  }
 
 onSearch(value:string) {
@@ -43,6 +47,9 @@ onSearch(value:string) {
     this.productapi.category.set('');
   }
 
+  logout() {
+    this.auth.logout();
+  }
   // isAdmin() {
   //   // let role = localStorage.getItem('role');
   //   return localStorage.getItem('role') === 'admin'

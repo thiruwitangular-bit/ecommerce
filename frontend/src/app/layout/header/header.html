@@ -86,10 +86,24 @@ text-transparent bg-clip-text tracking-wide">
             </div>
             <span class="text-[13px] font-semibold text-slate-900">Cart</span>
           </div>
-<!-- @if (isAdmin()) { -->
-          <button routerLink="login"
+
+@if (isAdmin()) { 
+    <button routerLink="admin"
+    class="max-lg:hidden py-2.5 text-sm font-medium rounded-full bg-white-600">Thiru</button>
+
+     <button (click)="auth.logout()"
+    class="max-lg:hidden py-1.5 text-sm font-medium px-2 text-sm font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">
+          <span class="material-icons text-base">logout</span>
+  </button>
+} 
+@if (!isAdmin()) { 
+  <button routerLink="login"
             class="max-lg:hidden px-5 py-2.5 text-sm font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">Login</button>
-<!-- } -->
+            <!-- <button (click)="auth.logout()"
+    class="max-lg:hidden py-1.5 text-sm font-medium px-2 text-sm font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">
+          <span class="material-icons text-base">logout</span>
+  </button> -->
+}
           <button id="toggleOpen" (click)="toggleMenu()" class="lg:hidden cursor-pointer">
             <svg class="w-7 h-7" fill="#333" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
