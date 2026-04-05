@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class Login {
 
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+  private router = inject(Router)
 
   constructor() {
     this.phoneForm = this.fb.group({
@@ -40,12 +42,24 @@ export class Login {
 
   verifyOTP() {
     if (this.otpForm.invalid) return;
-
     const {otp} = this.otpForm.value;
     const phone = this.phoneForm.value.phone;
 
-    this.auth.verifyOTP(phone,otp).subscribe({
-      error:(err)=> (this.error = err.error?.message || 'invalid OTP')
-    });
+    this.auth.verifyOTP(phone, otp).subscribe({
+      next:(res:any)=>{
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('role', res.role);
+
+      if (res.role === 'admin') {
+        this.router.navigate(['/admin'])
+      } else {
+        this.router.navigate(['/'])
+      }
+      },
+      error:(err)=> {
+        this.error = err.error?.message || 'invalid OTP'
+      }
+    })
   }
+  
 }

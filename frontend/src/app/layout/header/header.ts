@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { CartService } from '../../services/cart';
 import { WishlistService } from '../../services/wishlist';
@@ -19,6 +19,12 @@ export class Header {
  protected searchservice = inject(SearchService);
  protected productapi = inject(ProductApi);
 
+ isAdmin = signal(false);
+
+ ngOnInit() {
+  this.isAdmin.set(localStorage.getItem('role')==='admin')
+ }
+
 onSearch(value:string) {
   this.searchservice.setSearch(value);
 }
@@ -36,4 +42,9 @@ onSearch(value:string) {
    this.searchservice.clear();
     this.productapi.category.set('');
   }
+
+  // isAdmin() {
+  //   // let role = localStorage.getItem('role');
+  //   return localStorage.getItem('role') === 'admin'
+  // }
 }

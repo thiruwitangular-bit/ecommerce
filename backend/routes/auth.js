@@ -13,7 +13,8 @@ router.post('/send-otp', async (req,res)=>{
         let user = await User.findOne({phone});
         if (!user) {
             // for new user, create with default role
-            user = await User.create({phone})
+            user = new User({phone})
+           // user = await User.create({phone})
         }
 
         //generate 6 digit OTP
