@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,8 @@ export class Login {
 
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
-  private router = inject(Router)
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   constructor() {
     this.phoneForm = this.fb.group({
@@ -44,16 +45,19 @@ export class Login {
     if (this.otpForm.invalid) return;
     const {otp} = this.otpForm.value;
     const phone = this.phoneForm.value.phone;
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
 
     this.auth.verifyOTP(phone, otp).subscribe({
       next:(res:any)=>{
       localStorage.setItem('token', res.token);
-      localStorage.setItem('role', res.role);
+      this.auth.loadRole();
 
-      if (res.role === 'admin') {
+      if (this.auth.isAdmin()) {
         this.router.navigate(['/admin'])
       } else {
-        this.router.navigate(['/'])
+        this.router.navigate([returnUrl || '/']);
+        // this.router.navigate(['/'])
+
       }
       },
       error:(err)=> {

@@ -47,8 +47,8 @@ text-transparent bg-clip-text tracking-wide">
               class="text-blue-700 hover:text-blue-700 text-[15px] block font-semibold">All Products</a></li>
           <li class="max-lg:border-b max-lg:border-gray-300 max-lg:py-3 px-3"><a
               class="text-slate-900 hover:text-blue-700 text-[15px] block font-semibold cursor-pointer" (click)="selectCategory('wheelchair')">Wheelchair</a></li>
-          <li class="max-lg:border-b max-lg:border-gray-300 max-lg:py-3 px-3"><a
-              class="text-slate-900 hover:text-blue-700 text-[15px] block font-semibold cursor-pointer" (click)="selectCategory('walkstick')">Walking Aids</a></li>
+          <!-- <li class="max-lg:border-b max-lg:border-gray-300 max-lg:py-3 px-3"><a
+              class="text-slate-900 hover:text-blue-700 text-[15px] block font-semibold cursor-pointer" (click)="selectCategory('walkstick')">Walking Aids</a></li> -->
           <li class="max-lg:border-b max-lg:border-gray-300 max-lg:py-3 px-3"><a
               class="text-slate-900 hover:text-blue-700 text-[15px] block font-semibold cursor-pointer" (click)="selectCategory('cot')">Cot Series</a></li>
         </ul>
@@ -87,22 +87,33 @@ text-transparent bg-clip-text tracking-wide">
             <span class="text-[13px] font-semibold text-slate-900">Cart</span>
           </div>
 
-@if (isAdmin()) { 
-    <button routerLink="admin"
-    class="max-lg:hidden py-2.5 text-sm font-medium rounded-full bg-white-600">Thiru</button>
-
-     <button (click)="auth.logout()"
-    class="max-lg:hidden py-1.5 text-sm font-medium px-2 text-sm font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">
-          <span class="material-icons text-base">logout</span>
-  </button>
-} 
-@if (!isAdmin()) { 
+<!-- not logged in -->
+@if (!auth.isLoggedIn()) { 
   <button routerLink="login"
             class="max-lg:hidden px-5 py-2.5 text-sm font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">Login</button>
-            <!-- <button (click)="auth.logout()"
+}
+
+<!-- for normal user -->
+ @if (auth.isLoggedIn() && !auth.isAdmin()) {
+  <div class="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full">
+    <span class="text-xs text-gray-500">Hi</span>
+    <span class="text-sm font-medium text-gray-800">
+      {{ auth.getUser()?.phone }}
+    </span>
+  </div>
+ }
+
+ <!-- for admin user -->
+  @if (auth.isAdmin()) {
+ <button routerLink="/admin"
+    class="max-lg:hidden py-2.5 text-sm font-medium rounded-full bg-white-600 cursor-pointer">Thiru</button>
+  }
+<!-- logout -->
+@if (auth.isLoggedIn()) {
+  <button (click)="auth.logout()"
     class="max-lg:hidden py-1.5 text-sm font-medium px-2 text-sm font-medium rounded-sm text-white bg-blue-600 hover:bg-blue-700 cursor-pointer">
           <span class="material-icons text-base">logout</span>
-  </button> -->
+  </button> 
 }
           <button id="toggleOpen" (click)="toggleMenu()" class="lg:hidden cursor-pointer">
             <svg class="w-7 h-7" fill="#333" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

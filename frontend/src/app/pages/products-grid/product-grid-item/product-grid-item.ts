@@ -27,8 +27,8 @@ wishlist:any[] = [];
 
 constructor() {
   effect(() => {
-  console.log('CATEGORY:', this.productapi.category());
-  console.log('TERM:', this.searchservice.term());
+  // console.log('CATEGORY:', this.productapi.category());
+  // console.log('TERM:', this.searchservice.term());
 });
 }
 

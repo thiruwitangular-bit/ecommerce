@@ -41,15 +41,14 @@ router.post('/verify-otp', async (req,res)=>{
 
     try {
         const user = await User.findOne({phone});
-
         if (!user) return res.status(404).json({message:'user not found!'});
         if (user.otp !== otp) return res.status(401).json({message:'Invalid OTP'});
         if (user.otpExpires < new Date()) return res.status(401).json({message:'OTP Expired'})
 
             // otp verified - generate JWT
             const token = jwt.sign(
-                {id:user._id, role:user.role},
-                process.env.jwt_SECRET,
+                {id:user._id, role:user.role,phone:user.phone},
+                process.env.JWT_SECRET,
                 { expiresIn: '1d' } // string format OR number in seconds
 
             );

@@ -40,7 +40,12 @@
               <span class="material-icons !text-base">remove</span>
 
             </button>
-            <span clsemiass="text-slate-900 text-sm font-semibold px-6 block">{{count()}}</span>
+            @if (product()?.stock! !== 0) {
+            <span class="text-slate-900 text-sm font-semibold px-6 block">{{count()}}</span>
+            }
+             @if (product()?.stock! === 0) {
+            <span class="text-slate-900 text-sm font-semibold px-6 block">0</span>
+            }
             <button type="button" class="border-0 outline-0 cursor-pointer" (click)="increment()">
               <span class="material-icons !text-base">add</span>
 

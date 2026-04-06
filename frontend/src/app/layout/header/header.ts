@@ -5,6 +5,7 @@ import { WishlistService } from '../../services/wishlist';
 import { SearchService } from '../../services/search-service';
 import { ProductApi } from '../../services/product-api';
 import { AuthService } from '../../services/auth';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-header',
@@ -21,12 +22,12 @@ export class Header {
  protected productapi = inject(ProductApi);
  protected auth = inject(AuthService);
 
- isAdmin = signal(false);
+ isAdminn = signal(false);
 
  ngOnInit() {
-  this.isAdmin.set(localStorage.getItem('role')==='admin');
-  console.log(this.isAdmin())
+  this.isAdminn.set(localStorage.getItem('role')==='admin');
   this.cd.detectChanges();
+  console.log(jwtDecode(localStorage.getItem('token')!));
  }
 
 onSearch(value:string) {
@@ -50,8 +51,5 @@ onSearch(value:string) {
   logout() {
     this.auth.logout();
   }
-  // isAdmin() {
-  //   // let role = localStorage.getItem('role');
-  //   return localStorage.getItem('role') === 'admin'
-  // }
+ 
 }

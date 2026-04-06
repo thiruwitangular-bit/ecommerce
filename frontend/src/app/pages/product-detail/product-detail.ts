@@ -22,22 +22,22 @@ export class ProductDetail {
   product = signal<Product | null>(null);
   private snackbar = inject(MatSnackBar);
 
-count = signal(0);
+count = signal(1);
 
   constructor() {
     effect(() => {
       const id = this.route.snapshot.paramMap.get('id');
-
       if (id) [
         this.loadProduct(id)
       ]
     })
+
   }
 
   async loadProduct(id: string) {
     try {
       this.product.set(await this.productapi.getProductById(id));
-      console.log(this.product)
+      console.log(this.product);
     } catch (err) {
       console.log(err)
     }

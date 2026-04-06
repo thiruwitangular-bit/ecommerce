@@ -1,39 +1,35 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from './auth';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-
+  const auth = inject(AuthService);
   const router = inject(Router);
 
-  const role = localStorage.getItem('role');
-
-  if (role === 'admin') return true;
+  if (auth.isAdmin()) return true;  
 
   router.navigate(['/products'])
   return false;
 };
 
 export const authGuard: CanActivateFn = (route, state) => {
-
   const router = inject(Router);
-
   const token = localStorage.getItem('token');
 
   if (!token) {
-    router.navigate(['/login']);
-    return false;
+    return router.createUrlTree(['/login'],{
+      queryParams: {returnUrl:router.url}
+    })
   }
 
   try {
-    const decoded:any = jwtDecode(token);
-    if(decoded.role === 'admin') return true;
-    alert('Access denied, Admin Only');
-    router.navigate(['/']);
-    return false;
+    jwtDecode(token); return true
   } catch (err) {
-    router.navigate(['/login']);
-    return false
+    return router.createUrlTree(['/login'],{
+      queryParams: {returnUrl:router.url}
+
+    })
   }
 
 };
