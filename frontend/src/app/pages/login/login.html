@@ -16,10 +16,10 @@
                 Send OTP
             </button>
         </form>
-    }
+        }
 
         <!-- OTP Input -->
-         @if (otpsent) {
+        @if (otpsent) {
         <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()">
             <div class="mb-4">
                 <label class="block text-gray-700 mb-1">Enter OTP</label>
@@ -32,6 +32,6 @@
                 Verify OTP
             </button>
         </form>
-    }
+        }
     </div>
 </div>

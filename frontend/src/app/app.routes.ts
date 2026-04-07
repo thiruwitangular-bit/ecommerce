@@ -8,7 +8,13 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
+                redirectTo: 'home',
+                pathMatch: 'full',
+            },
+            {
+                path: 'home',
                 loadComponent: () => import('./layout/landing-page/landing-page').then(m => m.LandingPage)
+
             },
             {
                 path: 'products',
@@ -28,7 +34,7 @@ export const routes: Routes = [
             },
             {
                 path: 'checkout',
-                canActivate:[authGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout)
             },
             {
@@ -37,12 +43,12 @@ export const routes: Routes = [
             },
             {
                 path: 'admin',
-                canActivate:[adminGuard],
+                canActivate: [adminGuard],
                 loadComponent: () => import('./admin/admin/admin').then(m => m.Admin)
             },
             {
-            path:'login',
-            loadComponent:()=>import('./pages/login/login').then(m=>m.Login)
+                path: 'login',
+                loadComponent: () => import('./pages/login/login').then(m => m.Login)
             },
             {
                 path: 'page404',
@@ -54,5 +60,5 @@ export const routes: Routes = [
             }
         ]
     }
-    
+
 ];

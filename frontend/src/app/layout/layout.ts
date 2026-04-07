@@ -11,4 +11,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class Layout {
 
+  constructor() {
+     console.log('Layout loaded');
+  }
+
 }

@@ -22,7 +22,7 @@ export class ProductDetail {
   product = signal<Product | null>(null);
   private snackbar = inject(MatSnackBar);
 
-count = signal(1);
+  count = signal(1);
 
   constructor() {
     effect(() => {
@@ -45,50 +45,50 @@ count = signal(1);
   }
 
   increment() {
-    if (this.count()>=this.product()?.stock!) {
-      this.snackbar.open('Maximum stock reached','close',{
-      duration:3000,
-      horizontalPosition:'center',
-      verticalPosition:'top'
-    })
+    if (this.count() >= this.product()?.stock!) {
+      this.snackbar.open('Maximum stock reached', 'close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      })
       return;
     }
-   this.count.update(val=>val+1)
+    this.count.update(val => val + 1)
   }
 
   decrement() {
-    if (this.count()<=1) return;
-    this.count.update(val=>val-1)
+    if (this.count() <= 1) return;
+    this.count.update(val => val - 1)
   }
 
   addTocart() {
     const prod = this.product();
     if (!prod) return;
-    const result = this.cartservice.addtoCart(prod,this.count())
+    const result = this.cartservice.addtoCart(prod, this.count())
 
     if (result === 'added') {
-    this.snackbar.open('added to Cart','close',{
-      duration:3000,
-      horizontalPosition:'center',
-      verticalPosition:'top'
-    })
-  }
+      this.snackbar.open('added to Cart', 'close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      })
+    }
 
-  if (result ==='updated') {
-    this.snackbar.open('Already added in Cart','close',{
-      duration:3000,
-      horizontalPosition:'center',
-      verticalPosition:'top'
-    })
-  }
+    if (result === 'updated') {
+      this.snackbar.open('Already added in Cart', 'close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      })
+    }
 
-  if(result ==='limit') {
-     this.snackbar.open('Stock limit reached','close',{
-      duration:3000,
-      horizontalPosition:'center',
-      verticalPosition:'top'
-    })
-  }
+    if (result === 'limit') {
+      this.snackbar.open('Stock limit reached', 'close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top'
+      })
+    }
 
   }
 

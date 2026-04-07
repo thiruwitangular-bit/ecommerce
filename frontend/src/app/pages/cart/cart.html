@@ -49,7 +49,8 @@
                                         class="w-full h-full object-contain" />
                                 </div>
                                 <div>
-                                    <h4 class="text-base font-medium text-slate-900 truncate w-100" title="{{item.name}}"> {{item.name}}</h4>
+                                    <h4 class="text-base font-medium text-slate-900 truncate w-100"
+                                        title="{{item.name}}"> {{item.name}}</h4>
                                     <button (click)="cartService.removeFromcart(item._id!)" type="button"
                                         class="mt-3 font-medium text-red-500 text-sm cursor-pointer">
                                         Remove
@@ -60,13 +61,13 @@
                         <td class="p-4">
                             <div
                                 class="flex gap-2 items-center border border-gray-300 bg-white px-3 py-2 w-max rounded-full">
-                                <button (click)="cartService.decrementQty(item._id!)"
-                                type="button" class="border-0 outline-0 cursor-pointer">
+                                <button (click)="cartService.decrementQty(item._id!)" type="button"
+                                    class="border-0 outline-0 cursor-pointer">
                                     <span class="material-icons !text-base">remove</span>
                                 </button>
                                 <span class="text-slate-900 text-sm font-semibold px-3">{{item.quantity}}</span>
-                                <button (click)="cartService.incrementqty(item._id!)"
-                                type="button" class="border-0 outline-0 cursor-pointer">
+                                <button (click)="cartService.incrementqty(item._id!)" type="button"
+                                    class="border-0 outline-0 cursor-pointer">
                                     <span class="material-icons !text-base">add</span>
                                 </button>
                             </div>
@@ -88,13 +89,13 @@
             <ul class="text-slate-500 font-medium divide-y divide-gray-300 mt-6">
                 <li class="flex flex-wrap gap-4 text-base py-3">Subtotal <span
                         class="ml-auto font-semibold text-slate-900">
-                    {{cartService.subTotal() |  currency:"INR"}}
+                        {{cartService.subTotal() | currency:"INR"}}
                     </span></li>
                 <li class="flex flex-wrap gap-4 text-base py-3">Shipping <span
                         class="ml-auto font-semibold text-slate-900">
-                         <span class="text-gray-400 text-sm font-semibold text-gray-400 line-through">₹500</span>
+                        <span class="text-gray-400 text-sm font-semibold text-gray-400 line-through">₹500</span>
                         {{cartService.shipping() | number:'1.2-2'}}
-                
+
                     </span></li>
                 <li class="flex flex-wrap gap-4 text-base py-3">Tax <span
                         class="ml-auto font-semibold text-slate-900">{{cartService.tax() | number:'1.2-2'}}</span></li>

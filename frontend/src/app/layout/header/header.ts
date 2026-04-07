@@ -27,7 +27,6 @@ export class Header {
  ngOnInit() {
   this.isAdminn.set(localStorage.getItem('role')==='admin');
   this.cd.detectChanges();
-  console.log(jwtDecode(localStorage.getItem('token')!));
  }
 
 onSearch(value:string) {
