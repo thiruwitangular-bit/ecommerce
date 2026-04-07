@@ -41,6 +41,10 @@ export const routes: Routes = [
                 path: 'order-success',
                 loadComponent: () => import('./pages/order-success/order-success').then(m => m.OrderSuccess)
             },
+             {
+                path: 'order-history',
+                loadComponent: () => import('./pages/order-history/order-history').then(m => m.OrderHistory)
+            },
             {
                 path: 'admin',
                 canActivate: [adminGuard],

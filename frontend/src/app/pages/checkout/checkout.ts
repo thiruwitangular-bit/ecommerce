@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { ProductApi } from '../../services/product-api';
 import { Router } from '@angular/router';
 import { ViewOrders } from '../../admin/view-orders/view-orders';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-checkout',
@@ -22,6 +23,7 @@ protected cartService = inject(CartService)
 private fb = inject(FormBuilder);
 private snackBar = inject(MatSnackBar);
 private http = inject(HttpClient);
+private auth = inject(AuthService);
 private productapi = inject(ProductApi);
 cartItems = this.cartService.cartItems;
 private router = inject(Router)
@@ -38,7 +40,13 @@ checkoutForm = this.fb.group({
 })
 
 ngOnInit() {
-  console.log('CART ITEMS 👉', this.cartItems());
+  const user = this.auth.getUser();
+
+  if (user) {
+    this.checkoutForm.patchValue({
+      phone: user.phone?.toString().trim()
+    });
+  }
 }
 
 async placeOrder() {
@@ -68,7 +76,6 @@ const orderData = {
   }
 }
 const res:any = await firstValueFrom(this.http.post(`${environment.apiURL}/orders`, orderData));
-console.log('API RESPONSE 👉', res);
 this.snackBar.open('Order Placed Succesfully!', 'close',{
       duration:3000,
       verticalPosition:'top',
