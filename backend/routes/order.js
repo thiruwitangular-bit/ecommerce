@@ -71,6 +71,21 @@ router.get('/', async (req, res) => {
     }
 });
 
+//get order by phone
+router.get('/:phone', async (req,res)=> {
+    try {
+        const orders = await Order.find({
+            'customer.phone':req.params.phone
+        })
+        .populate('items.productId')
+        .sort({createdAt: -1});
+        res.json(orders)
+
+    } catch (err) {
+        res.status(500).json({message:'Error Fetching Orders'})
+    }
+})
+
 // get single order
 router.get('/:id', async (req, res) => {
     try {
@@ -88,6 +103,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ messge: 'Error fetching order!' })
     }
 });
+
 
 //update order status
 router.put('/:id', async (req, res) => {
