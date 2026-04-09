@@ -83,7 +83,7 @@ this.cartItems().reduce(
 //shipping
 shipping = computed(()=>{
   const sub = this.subTotal();
-  return sub>5000?0:250 // free above 5000
+  return sub === 0 || sub >5000 ? 0 : 250 // free above 5000
 });
 //tax
 tax = computed(()=> {

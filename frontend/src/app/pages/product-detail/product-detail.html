@@ -59,8 +59,8 @@
               to cart</button>
             <button type="button" routerLink="/checkout"
               class="px-4 py-3 w-[45%] cursor-pointer border border-purple-600 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
-              [disabled]="cartservice.cartCount() <= 0 && product()?.stock === 0">Buy
-              it now</button>;
+              [disabled]="cartservice.cartCount() <= 0 || product()?.stock === 0">Buy
+              it now</button>
           </div>
         </div>
         <hr class="my-6 border-gray-300" />

@@ -25,6 +25,10 @@ app.use('/api/orders', orderRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+//payment Auth
+const razorpayRoutes = require('./routes/payment');
+app.use('/api/payment', razorpayRoutes);
+
 app.get('/',(req,res)=>{
     res.send("Welcome to Ecommerce API!.")
 })

@@ -17,7 +17,8 @@
                                             {{item.quantity}}
                                         </span></li>
                                     <li class="flex flex-wrap gap-4">Total Price <span
-                                            class="ml-auto font-semibold">{{item.price * item.quantity | currency:'INR': 'symbol':'1.2-2'}}</span></li>
+                                            class="ml-auto font-semibold">{{item.price * item.quantity | currency:'INR':
+                                            'symbol':'1.2-2'}}</span></li>
                                 </ul>
 
                             </div>
@@ -29,20 +30,24 @@
                     <div>
                         <ul class="text-slate-500 font-medium space-y-4">
                             <li class="flex flex-wrap gap-4 text-sm">Subtotal <span
-                                    class="ml-auto font-semibold text-slate-900">{{cartService.subTotal() | currency:'INR': 'symbol':'1.2-2'}}</span></li>
+                                    class="ml-auto font-semibold text-slate-900">{{cartService.subTotal() |
+                                    currency:'INR': 'symbol':'1.2-2'}}</span></li>
                             <li class="flex flex-wrap gap-4 text-sm">Shipping <span
-                                    class="ml-auto font-semibold text-slate-900">{{cartService.shipping() | currency:'INR': 'symbol':'1.2-2'}}</span></li>
+                                    class="ml-auto font-semibold text-slate-900">{{cartService.shipping() |
+                                    currency:'INR': 'symbol':'1.2-2'}}</span></li>
                             <li class="flex flex-wrap gap-4 text-sm">Tax <span
-                                    class="ml-auto font-semibold text-slate-900">{{cartService.tax() | currency:'INR': 'symbol':'1.2-2'}}</span></li>
+                                    class="ml-auto font-semibold text-slate-900">{{cartService.tax() | currency:'INR':
+                                    'symbol':'1.2-2'}}</span></li>
                             <hr class="border-slate-300" />
                             <li class="flex flex-wrap gap-4 text-[15px] font-semibold text-slate-900">Total <span
-                                    class="ml-auto">{{cartService.total() | currency:'INR': 'symbol':'1.2-2'}}</span></li>
+                                    class="ml-auto">{{cartService.total() | currency:'INR': 'symbol':'1.2-2'}}</span>
+                            </li>
                         </ul>
 
                         <div class="mt-8">
-                            <button (click)="placeOrder()" type="button"
-                                class="rounded-md px-4 py-2.5 w-full text-sm font-medium tracking-wide bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">Complete
-                                Purchase</button>
+<button (click)="placeOrder()" type="button"
+class="rounded-md px-4 py-2.5 w-full text-sm font-medium tracking-wide bg-blue-600 hover:bg-blue-700 text-white cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed" [disabled]="cartService.total() === 0">Complete
+Purchase</button>
                         </div>
                     </div>
                 </div>
@@ -94,13 +99,16 @@
 
                 <div class="mt-12">
                     <h2 class="text-xl text-slate-900 font-semibold mb-6">Payment</h2>
-                    <div class="grid gap-4 lg:grid-cols-2">
-                        <div class="bg-gray-100 p-4 rounded-md border border-gray-300 max-w-sm">
-                            <select formControlName="paymentMethod" class="input">
-                                <option value="COD">Cash on Delivery</option>
-                            </select>
-                        </div>
+                    <div class="mt-4">
+                        <label>
+                            <input type="radio" value="ONLINE" formControlName="paymentMethod" name="paymentMethod" />
+                            Online Payment
+                        </label>
 
+                        <label class="ml-4">
+                            <input type="radio" value="COD" formControlName="paymentMethod" name="paymentMethod" />
+                            Cash on Delivery
+                        </label>
                     </div>
                 </div>
 

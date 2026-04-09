@@ -6,7 +6,7 @@ const Product = require('../models/Product');
 //create Order
 router.post('/', async (req, res) => {
     try {
-        const { items, customer, pricing } = req.body;
+        const { items, customer, pricing, paymentMethod, paymentStatus, paymentId } = req.body;
 
         //validate Items
         for (const item of items) {
@@ -38,7 +38,10 @@ router.post('/', async (req, res) => {
         const newOrder = new Order({
             customer,
             items,
-            pricing
+            pricing,
+            paymentMethod, 
+            paymentStatus, 
+            paymentId
         });
 
         await newOrder.save();
