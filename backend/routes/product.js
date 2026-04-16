@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const multer = require('multer');
 const Order = require('../models/Order');
 
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads/' });
 
 // search API
 router.get('/search', async (req, res) => {
@@ -12,20 +12,17 @@ router.get('/search', async (req, res) => {
         const q = req.query.q?.trim();
         const category = req.query.category?.trim();
         let filter = {};
-    
-        if(q) {
+        if (q) {
             filter.$or = [
                 { name: { $regex: q, $options: 'i' } },
                 { description: { $regex: q, $options: 'i' } },
                 { category: { $regex: q, $options: 'i' } }
             ]
         }
-    
         if (category) {
             filter.category = new RegExp(`^${category}$`, 'i');
         }
         const products = await Product.find(filter);
-        
         res.status(200).json(products)
     } catch (err) {
         res.status(500).json({ message: 'Search error', err })
@@ -33,54 +30,24 @@ router.get('/search', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-  try {
-    const category = req.query.category;
-
-    let filter = {};
-
-    if (category) {
-      filter.category = new RegExp(`^${category}$`, 'i');
+    try {
+        const category = req.query.category;
+        let filter = {};
+        if (category) {
+            filter.category = new RegExp(`^${category}$`, 'i');
+        }
+        const products = await Product.find(filter);
+        res.status(200).json(products);
+    } catch (err) {
+        res.status(500).json({ message: 'Error', err });
     }
-
-    const products = await Product.find(filter);
-
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json({ message: 'Error', err });
-  }
 });
-
-// router.get('/', async (req, res) => {
-//     try {
-//         const query = req.query.q;
-
-//         let filter = {};
-
-//         if (query) {
-//             filter = {
-//                 $or: [
-//                     { name: { $regex: query, $options: 'i' } },
-//                     { description: { $regex: query, $options: 'i' } },
-//                     { category: { $regex: query, $options: 'i' } }
-//                 ]
-//             };
-//         }
-
-//         const products = await Product.find(filter);
-
-//         res.status(200).json(products);
-
-//     } catch (err) {
-//         res.status(500).json({ message: 'Error', err });
-//     }
-// });
 
 //GET: list-item //get by id
 router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const product = await Product.findById(id);
-
         if (!product) {
             return res.status(404).json({ message: 'Product not found' })
         }
@@ -105,9 +72,8 @@ router.post('/', upload.single('image'), async (req, res) => {
             imageUrl: req.file ? `/uploads/${req.file.filename}` : ''
         });
         const savedProduct = await product.save();
-
         res.status(200).json(savedProduct);
-        
+
     } catch (err) {
         res.status(500).json({ message: 'An error occured', err })
     }

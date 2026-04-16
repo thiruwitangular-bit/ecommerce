@@ -1,83 +1,83 @@
-
 <div class="p-4">
-    @if (orders?.length > 0) {
-        <div class="max-w-6xl mx-auto">
-          <div class="border-b border-gray-300 pb-4">
-            <div class="flex gap-4">
-              <div>
-                <h3 class="text-2xl font-semibold text-slate-900">Order History - {{phone}}</h3>
-                <p class="text-[15px] text-slate-500 mt-3">Easily view and manage all your previous orders.</p>
+  @if (orders?.length > 0) {
+  <div class="max-w-6xl mx-auto">
+    <div class="border-b border-gray-300 pb-4">
+      <div class="flex gap-4">
+        <div>
+          <h3 class="text-2xl font-semibold text-slate-900">Order History - {{phone}}</h3>
+          <p class="text-[15px] text-slate-500 mt-3">Easily view and manage all your previous orders.</p>
+        </div>
+      </div>
+    </div>
+    @for (order of orders; track order._id) {
+    <div class="mt-8">
+      <div class="bg-gray-100 p-6 rounded-md">
+        <div class="flex md:items-center max-md:flex-col gap-x-12 gap-y-6">
+          <div class="max-md:flex max-md:justify-between max-md:gap-4">
+            <h6 class="text-[15px] font-medium text-slate-900">Purchase Date</h6>
+            <p class="text-sm text-slate-500 font-medium md:mt-2">{{order.createdAt | date:"dd-MM-yyyy"}}</p>
+          </div>
+          <div class="max-md:flex max-md:justify-between max-md:gap-4">
+            <h6 class="text-[15px] font-medium text-slate-900">Order id</h6>
+            <p class="text-sm text-slate-500 font-medium md:mt-2">{{order._id}}</p>
+          </div>
+          <div class="max-md:flex max-md:justify-between max-md:gap-4">
+            <h6 class="text-[15px] font-medium text-slate-900">Total Paid</h6>
+            <p class="text-sm text-slate-500 font-medium md:mt-2">
+              {{order.pricing.total | currency:'INR':'symbol':'1.2-2'}}
+            </p>
+          </div>
+          <div class="md:ml-auto">
+            <button type="button"
+              class="cursor-pointer text-sm text-slate-900 font-medium bg-gray-200 border border-gray-300 outline-0 px-4 py-2 rounded-md max-md:w-full">
+              View Invoice
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="divide-y divide-gray-300 mt-4">
+        <div class="grid grid-cols-5 max-md:grid-cols-2 items-start justify-between gap-6 py-4">
+          @for (item of order.items; track item) {
+
+          <div class="md:col-span-2 flex sm:items-center gap-4 max-sm:flex-col">
+            <div class="bg-gray-100 p-2 rounded-lg w-16 h-16 shrink-0">
+              <img [src]="'http://localhost:3000' + item.productId?.imageUrl" class="w-full h-full object-contain" />
             </div>
+            <div>
+              <h6 class="text-[15px] font-medium text-slate-900">{{item.productId?.name}}</h6>
             </div>
           </div>
-    @for (order of orders; track order._id) {
-          <div class="mt-8">
-            <div class="bg-gray-100 p-6 rounded-md">
-              <div class="flex md:items-center max-md:flex-col gap-x-12 gap-y-6">
-                <div class="max-md:flex max-md:justify-between max-md:gap-4">
-                  <h6 class="text-[15px] font-medium text-slate-900">Purchase Date</h6>
-                  <p class="text-sm text-slate-500 font-medium md:mt-2">{{order.createdAt | date:"dd-MM-yyyy"}}</p>
-                </div>
-                <div class="max-md:flex max-md:justify-between max-md:gap-4">
-                  <h6 class="text-[15px] font-medium text-slate-900">Order id</h6>
-                  <p class="text-sm text-slate-500 font-medium md:mt-2">{{order._id}}</p>
-                </div>
-                <div class="max-md:flex max-md:justify-between max-md:gap-4">
-                  <h6 class="text-[15px] font-medium text-slate-900">Total Paid</h6>
-                  <p class="text-sm text-slate-500 font-medium md:mt-2">
-                    {{order.pricing.total | currency:'INR':'symbol':'1.2-2'}}
-                  </p>
-                </div>
-                <div class="md:ml-auto">
-                  <button type="button" class="cursor-pointer text-sm text-slate-900 font-medium bg-gray-200 border border-gray-300 outline-0 px-4 py-2 rounded-md max-md:w-full">
-                    View Invoice
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="divide-y divide-gray-300 mt-4">
-              <div class="grid grid-cols-5 max-md:grid-cols-2 items-start justify-between gap-6 py-4">
-            @for (item of order.items; track item) {
+          <div>
+            <h6 class="text-sm font-medium text-slate-500">Order Quantity</h6>
+            <p class="text-sm text-slate-900 font-medium mt-2">{{item.quantity}}</p>
+          </div>
+          <div>
+            <h6 class="text-sm font-medium text-slate-500">Order Status</h6>
+            <p class="bg-green-100 text-[13px] font-medium text-green-600 mt-2 inline-block rounded-md py-1.5 px-3">
+              {{order.status}}</p>
+          </div>
 
-                <div class="md:col-span-2 flex sm:items-center gap-4 max-sm:flex-col">
-                  <div class="bg-gray-100 p-2 rounded-lg w-16 h-16 shrink-0">
-                     <img [src]="'http://localhost:3000' + item.productId?.imageUrl"
-                                class="w-full h-full object-contain" />
-                  </div>
-                  <div>
-                    <h6 class="text-[15px] font-medium text-slate-900">{{item.productId?.name}}</h6>
-                  </div>
-                </div>
-                <div>
-                  <h6 class="text-sm font-medium text-slate-500">Order Quantity</h6>
-                  <p class="text-sm text-slate-900 font-medium mt-2">{{item.quantity}}</p>
-                </div>
-                <div>
-                  <h6 class="text-sm font-medium text-slate-500">Order Status</h6>
-                  <p class="bg-green-100 text-[13px] font-medium text-green-600 mt-2 inline-block rounded-md py-1.5 px-3">Completed</p>
-                </div>
-                
-                <div class="md:ml-auto">
-                  <h6 class="text-sm font-medium text-slate-500">Price</h6>
-                  <p class="text-sm text-slate-900 font-medium mt-2">
-             {{item.productId?.price * item.quantity | currency:'INR':'symbol':'1.2-2'}}  
-                  </p>
-                </div>
-            }
-            </div>
+          <div class="md:ml-auto">
+            <h6 class="text-sm font-medium text-slate-500">Price</h6>
+            <p class="text-sm text-slate-900 font-medium mt-2">
+              {{item.productId?.price * item.quantity | currency:'INR':'symbol':'1.2-2'}}
+            </p>
+          </div>
+          }
+        </div>
 
-            </div>
-        </div>
-        }
-        </div>
-    
-    }
-    @else {
-    <li>No orders found</li>
-    }
-     <div class="flex flex-wrap gap-4 mt-10">
-                <button type="button" routerLink="/products"
-                    class="text-sm px-4 py-2.5 font-medium tracking-wide bg-transparent text-slate-900 border border-gray-300 rounded-md cursor-pointer">Continue
-                    Shopping </button>
-            </div>
+      </div>
     </div>
+    }
+  </div>
+
+  }
+  @else {
+  <li>No orders found</li>
+  }
+  <div class="flex flex-wrap gap-4 mt-10">
+    <button type="button" routerLink="/products"
+      class="text-sm px-4 py-2.5 font-medium tracking-wide bg-transparent text-slate-900 border border-gray-300 rounded-md cursor-pointer">Continue
+      Shopping </button>
+  </div>
+</div>
