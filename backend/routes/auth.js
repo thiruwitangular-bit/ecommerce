@@ -25,10 +25,9 @@ router.post('/send-otp', async (req,res)=>{
         await user.save();
 
         //todo send otp via sms provier
-        console.log(`otp for ${phone}: ${otp}`) // for testing
+        // console.log(`otp for ${phone}: ${otp}`) // for testing
         res.status(200).json({message:'OTP send successfully'})
     } catch (err) {
-        console.log(err);
         res.status(500).json({message:'server error'})
     }
 })
@@ -59,7 +58,6 @@ router.post('/verify-otp', async (req,res)=>{
 
             res.json({token,role:user.role,phone:user.phone});
     } catch (err) {
-        console.error('VERIFY OTP ERROR:', err);
         res.status(500).json({message:'server error', err})
     }
 });

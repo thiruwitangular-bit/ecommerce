@@ -1,7 +1,28 @@
+const { default: mongoose } = require("mongoose");
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+
+const counterSchema = new mongoose.Schema({
+    date: String,
+    seq: Number
+})
+
+const Counter = mongoose.models.Counter || mongoose.model('Counter', counterSchema);
+
+const getNextOrderid = async () => {
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+
+    const counter = await Counter.findOneAndUpdate(
+        { date: today },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+    );
+    const serial = String(counter.seq).padStart(3, '0');
+
+    return `MRT-${today}-${serial}`;
+}
 
 //create Order
 router.post('/', async (req, res) => {
@@ -34,26 +55,27 @@ router.post('/', async (req, res) => {
             );
         }
 
+        const orderId = await getNextOrderid();
+
         //save order
         const newOrder = new Order({
+            orderId,
             customer,
             items,
             pricing,
-            paymentMethod, 
-            paymentStatus, 
+            paymentMethod,
+            paymentStatus,
             paymentId
         });
 
         await newOrder.save();
-
         res.status(200).json({
             message: 'Order placed successfully',
-            orderId: newOrder._id,
+            orderId: newOrder.orderId,
             order: newOrder
         });
 
     } catch (err) {
-        console.log('order error', err);
         res.status(500).json({
             message: 'order failed',
             err
@@ -75,17 +97,17 @@ router.get('/', async (req, res) => {
 });
 
 //get order by phone
-router.get('/:phone', async (req,res)=> {
+router.get('/:phone', async (req, res) => {
     try {
         const orders = await Order.find({
-            'customer.phone':req.params.phone
+            'customer.phone': req.params.phone
         })
-        .populate('items.productId')
-        .sort({createdAt: -1});
+            .populate('items.productId')
+            .sort({ createdAt: -1 });
         res.json(orders)
 
     } catch (err) {
-        res.status(500).json({message:'Error Fetching Orders'})
+        res.status(500).json({ message: 'Error Fetching Orders' })
     }
 })
 

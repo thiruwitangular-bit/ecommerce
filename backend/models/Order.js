@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    orderId:{type:String, unique:true},
     customer: {
         name: String,
         phone: String,
@@ -24,10 +25,17 @@ const orderSchema = new mongoose.Schema({
         shipping: Number,
         total: Number
     },
-    status: {
-    type: String,
-    default: 'Placed'
+
+    paymentMethod: {
+        type: String,
+        enum: ['COD','Razorpay'],
+        default: 'COD'
     },
+    paymentStatus: {
+    type: String,
+    default: 'Ordered'
+    },
+    paymentId: String,
 
     createdAt: {
         type: Date,

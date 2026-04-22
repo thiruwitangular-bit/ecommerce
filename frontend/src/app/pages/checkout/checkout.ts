@@ -165,7 +165,7 @@ export class Checkout {
     this.cartService.clearCart();
     this.productapi.productResource.reload();
     this.router.navigate(['/order-success'], {
-      queryParams: { orderId: res?.order._id }
+      queryParams: { orderId: res?.order.orderId }
     })
   }
 

@@ -19,7 +19,11 @@
           </div>
           <div class="max-md:flex max-md:justify-between max-md:gap-4">
             <h6 class="text-[15px] font-medium text-slate-900">Order id</h6>
-            <p class="text-sm text-slate-500 font-medium md:mt-2">{{order._id}}</p>
+            <p class="text-sm text-slate-500 font-medium md:mt-2">{{order.orderId}}</p>
+          </div>
+          <div class="max-md:flex max-md:justify-between max-md:gap-4">
+            <h6 class="text-[15px] font-medium text-slate-900">Payment Method</h6>
+            <p class="text-sm text-slate-500 font-medium md:mt-2">{{order.paymentMethod}}</p>
           </div>
           <div class="max-md:flex max-md:justify-between max-md:gap-4">
             <h6 class="text-[15px] font-medium text-slate-900">Total Paid</h6>
@@ -54,7 +58,7 @@
           <div>
             <h6 class="text-sm font-medium text-slate-500">Order Status</h6>
             <p class="bg-green-100 text-[13px] font-medium text-green-600 mt-2 inline-block rounded-md py-1.5 px-3">
-              {{order.status}}</p>
+              {{order.paymentStatus}}</p>
           </div>
 
           <div class="md:ml-auto">

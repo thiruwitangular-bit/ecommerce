@@ -54,7 +54,6 @@ router.get('/:id', async (req, res) => {
 
         res.status(200).json(product);
     } catch (err) {
-        console.error('GET BY ID ERROR:', err.message);
         res.status(500).json({ message: 'An error occured', err })
     }
 })
@@ -90,11 +89,9 @@ router.put('/:id', multer().none(), async (req, res) => {
             { $set: req.body },
             { new: true }
         );
-        console.log('UPDATED:', updateProduct);
 
         res.status(200).json(updateProduct);
     } catch (err) {
-        console.error('update error', err.message)
         res.status(500).json({ message: 'An error occured', err })
     }
 })

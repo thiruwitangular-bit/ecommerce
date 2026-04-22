@@ -24,7 +24,6 @@ private cd = inject(ChangeDetectorRef);
     this.phone = user.phone
     this.fetchOrders();
     console.log(this.phone)
-   
   }
 
   fetchOrders() {
